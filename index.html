@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xhavid Mamuti - Web Developer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      if (typeof tailwind !== "undefined" && tailwind.config) {
+        tailwind.config = {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ["Inter", "sans-serif"],
+              },
+              animation: {
+                float: "float 6s ease-in-out infinite",
+                "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                "fade-in": "fadeIn 1s ease-in forwards",
+                "slide-up": "slideUp 0.5s ease-out forwards",
+                wiggle: "wiggle 1s ease-in-out infinite",
+                "spin-slow": "spin 8s linear infinite",
+              },
+              keyframes: {
+                float: {
+                  "0%, 100%": { transform: "translateY(0)" },
+                  "50%": { transform: "translateY(-10px)" },
+                },
+                fadeIn: {
+                  "0%": { opacity: "0" },
+                  "100%": { opacity: "1" },
+                },
+                slideUp: {
+                  "0%": { transform: "translateY(20px)", opacity: "0" },
+                  "100%": { transform: "translateY(0)", opacity: "1" },
+                },
+                wiggle: {
+                  "0%, 100%": { transform: "rotate(-3deg)" },
+                  "50%": { transform: "rotate(3deg)" },
+                },
+              },
+            },
+          },
+        };
+      }
+    </script>
+
+    <style>
+      .gradient-text {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px -1px rgba(0, 0, 0, 0.08);
+      }
+
+      .service-card {
+        transition: all 0.3s ease;
+      }
+
+      .hero-shape {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        transform: rotate(180deg);
+      }
+
+      .hero-shape svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 70px;
+      }
+
+      @media (max-width: 640px) {
+        .hero-shape svg {
+          height: 40px;
+        }
+      }
+
+      .hero-shape .shape-fill {
+        fill: #ffffff;
+      }
+
+      .glow-button {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .glow-button::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(45deg);
+        animation: glitter 6s linear infinite;
+      }
+
+      @media (max-width: 640px) {
+        .glow-button {
+          padding: 1rem 2rem;
+          font-size: 0.875rem;
+        }
+      }
+
+      @keyframes glitter {
+        0% {
+          transform: rotate(45deg) translateX(-100%);
+        }
+        100% {
+          transform: rotate(45deg) translateX(100%);
+        }
+      }
+
+      .blob {
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+        animation: morph 15s linear infinite alternate;
+        transform-origin: center;
+      }
+
+      @media (max-width: 640px) {
+        .blob:nth-child(1) {
+          top: 10%;
+          left: -5%;
+          width: 150px;
+          height: 150px;
+        }
+        .blob:nth-child(2) {
+          bottom: 10%;
+          right: -5%;
+          width: 150px;
+          height: 150px;
+        }
+        .blob:nth-child(3) {
+          top: 60%;
+          left: 20%;
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      @keyframes morph {
+        0% {
+          border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+          transform: translate(0, 0) rotate(0deg);
+        }
+        33% {
+          border-radius: 72% 28% 30% 70% / 53% 30% 70% 47%;
+          transform: translate(5px, 5px) rotate(2deg);
+        }
+        66% {
+          border-radius: 30% 70% 70% 30% / 30% 52% 48% 70%;
+          transform: translate(-5px, 10px) rotate(-2deg);
+        }
+        100% {
+          border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .spotlight {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-image: radial-gradient(
+          circle at var(--x) var(--y),
+          rgba(255, 255, 255, 0.15) 0%,
+          rgba(255, 255, 255, 0) 50%
+        );
+      }
+
+      .social-icon {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .social-icon::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+        z-index: -1;
+        transform: scale(0);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border-radius: 9999px;
+      }
+
+      .social-icon:hover::after {
+        transform: scale(1);
+      }
+
+      .contact-card {
+        backdrop-filter: blur(10px);
+        transition: all 0.5s ease;
+      }
+
+      .contact-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .animated-bg {
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        background-image: linear-gradient(
+          45deg,
+          #2563eb,
+          #4f46e5,
+          #7c3aed,
+          #2563eb
+        );
+      }
+
+      #services {
+        height: 100vh;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      #canvas-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
+
+      @media (max-width: 640px) {
+        #hero-title {
+          font-size: 2.5rem;
+        }
+        #hero-text {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="font-sans bg-gray-50 overflow-x-hidden">
+    <!-- Hero Section with 3D Animation -->
+    <section
+      class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      <div id="canvas-container"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-blue-600/90 via-indigo-600/90 to-purple-600/90 animated-bg"
+      ></div>
+
+      <div class="spotlight" id="spotlight"></div>
+
+      <!-- Animated blobs in background -->
+      <div
+        class="absolute top-1/4 -left-10 w-64 h-64 bg-blue-400 opacity-20 blob"
+      ></div>
+      <div
+        class="absolute bottom-1/4 -right-10 w-72 h-72 bg-indigo-400 opacity-20 blob"
+        style="animation-delay: -5s"
+      ></div>
+      <div
+        class="absolute top-3/4 left-1/3 w-40 h-40 bg-purple-400 opacity-10 blob"
+        style="animation-delay: -10s"
+      ></div>
+
+      <div
+        class="container mx-auto px-6 sm:px-8 text-center relative z-10"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <div
+          class="w-32 h-32 mx-auto mb-6 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center p-2"
+        >
+          <div
+            class="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white text-4xl font-bold"
+          >
+            XM
+          </div>
+        </div>
+        <h1
+          class="text-5xl md:text-7xl font-bold mb-6 text-white"
+          id="hero-title"
+        >
+          <span class="inline-block" data-splitting>Hi, I'm</span>
+          <span
+            class="gradient-text bg-gradient-to-r from-white to-blue-200 inline-block ml-2"
+            id="typewriter"
+            >Xhavid Mamuti</span
+          >
+        </h1>
+        <p
+          class="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed"
+          id="hero-text"
+        >
+          I build modern, responsive, and high-performance websites tailored to
+          your needs.
+        </p>
+        <a
+          href="#contact"
+          class="glow-button group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-10 py-5 font-semibold text-blue-600 shadow-lg transition duration-300 ease-out hover:scale-105"
+        >
+          <span
+            class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 transition-opacity group-hover:opacity-100"
+          ></span>
+          <span
+            class="relative flex items-center group-hover:text-white transition duration-300"
+          >
+            <span>Get in Touch</span>
+            <svg
+              class="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              ></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Wave separator -->
+      <div class="hero-shape">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            class="shape-fill"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="mb-16 text-center" data-aos="fade-up">
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">What I Do</h2>
+          <div
+            class="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto"
+          ></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+          <div
+            class="service-card p-6 bg-gray-50 rounded-xl shadow-lg text-center min-w-[250px]"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div
+              class="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"
+            >
+              <i class="fas fa-paint-brush text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">
+              Custom Web Design
+            </h3>
+            <p class="text-gray-600">
+              Unique, user-friendly designs that reflect your brand and engage
+              your audience.
+            </p>
+          </div>
+          <div
+            class="service-card p-6 bg-gray-50 rounded-xl shadow-lg text-center min-w-[250px]"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div
+              class="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"
+            >
+              <i class="fas fa-laptop text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">
+              Responsive Development
+            </h3>
+            <p class="text-gray-600">
+              Websites that look and perform beautifully on all devices, from
+              phones to desktops.
+            </p>
+          </div>
+          <div
+            class="service-card p-6 bg-gray-50 rounded-xl shadow-lg text-center min-w-[250px]"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div
+              class="w-16 h-16 mx-auto mb-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"
+            >
+              <i class="fas fa-rocket text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">
+              Performance Optimization
+            </h3>
+            <p class="text-gray-600">
+              Fast-loading, SEO-optimized websites to boost your online
+              presence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="py-32 relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 text-white"
+    >
+      <!-- Glowing circle animations -->
+      <div
+        class="absolute top-20 left-20 w-64 h-64 rounded-full bg-blue-500/10 animate-pulse-slow"
+      ></div>
+      <div
+        class="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-indigo-500/10 animate-pulse-slow"
+        style="animation-delay: 1s"
+      ></div>
+
+      <div class="container mx-auto px-6 relative z-10">
+        <div class="mb-16 text-center" data-aos="fade-up">
+          <h2
+            class="text-4xl font-bold mb-4 gradient-text bg-gradient-to-r from-blue-400 to-purple-300"
+          >
+            Let's Work Together
+          </h2>
+          <div
+            class="w-32 h-1 bg-gradient-to-r from-blue-400 to-purple-300 mx-auto"
+          ></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="contact-card bg-white/10 backdrop-blur-xl p-12 rounded-3xl shadow-2xl"
+            data-aos="zoom-in"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div class="text-center md:text-left">
+                <h3
+                  class="text-2xl font-bold mb-6 gradient-text bg-gradient-to-r from-blue-300 to-purple-200"
+                >
+                  Ready to start?
+                </h3>
+                <p class="text-gray-200 mb-8 leading-relaxed">
+                  Ready to bring your vision to life? Let's create something
+                  amazing together. Reach out to discuss your project needs and
+                  goals.
+                </p>
+                <div class="flex flex-col space-y-6">
+                  <p
+                    class="group flex items-center transition duration-300 ease-in-out transform hover:translate-x-2"
+                  >
+                    <span
+                      class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mr-4"
+                    >
+                      <i class="far fa-envelope"></i>
+                    </span>
+                    <a
+                      href="mailto:infojava1300@gmail.com"
+                      class="text-gray-200 hover:text-blue-300 transition"
+                    >
+                      infojava1300@gmail.com
+                    </a>
+                  </p>
+                  <p
+                    class="group flex items-center transition duration-300 ease-in-out transform hover:translate-x-2"
+                  >
+                    <span
+                      class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mr-4"
+                    >
+                      <i class="fas fa-phone-alt"></i>
+                    </span>
+                    <a
+                      href="tel:+38970714073"
+                      class="text-gray-200 hover:text-blue-300 transition"
+                    >
+                      +389 70 714 073
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex flex-col justify-center">
+                <h3
+                  class="text-2xl font-bold mb-6 text-center gradient-text bg-gradient-to-r from-blue-300 to-purple-200"
+                >
+                  Connect with me
+                </h3>
+                <div class="flex justify-center space-x-6">
+                  <a
+                    href="https://github.com/java1300"
+                    class="social-icon w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110"
+                    target="_blank"
+                    aria-label="GitHub"
+                  >
+                    <i class="fab fa-github fa-lg"></i>
+                  </a>
+                  <a
+                    href="https://facebook.com/xhavid.mamuti.52"
+                    class="social-icon w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110"
+                    target="_blank"
+                    aria-label="Facebook"
+                  >
+                    <i class="fab fa-facebook-f fa-lg"></i>
+                  </a>
+                  <a
+                    href="https://instagram.com/xhavidm"
+                    class="social-icon w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110"
+                    target="_blank"
+                    aria-label="Instagram"
+                  >
+                    <i class="fab fa-instagram fa-lg"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-900 text-gray-400 text-center">
+      <div class="container mx-auto px-6">
+        <p>© 2025 Xhavid Mamuti. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize AOS (Animate on Scroll)
+      document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({
+          duration: 800,
+          easing: "ease-in-out",
+          once: true,
+        });
+        console.log("AOS initialized");
+
+        // Spotlight effect
+        const spotlight = document.getElementById("spotlight");
+        document.addEventListener("mousemove", (e) => {
+          spotlight.style.setProperty("--x", `${e.clientX}px`);
+          spotlight.style.setProperty("--y", `${e.clientY}px`);
+        });
+
+        // Typewriter effect with GSAP
+        const text = "Xhavid Mamuti";
+        const typewriter = document.getElementById("typewriter");
+        typewriter.textContent = "";
+
+        console.log("GSAP loaded:", typeof gsap);
+
+        const tl = gsap.timeline();
+
+        tl.to("#hero-title", {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+        });
+
+        let i = 0;
+        const typeInterval = setInterval(function () {
+          if (i < text.length) {
+            typewriter.textContent += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(typeInterval);
+
+            gsap.to("#hero-text", {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              delay: 0.3,
+              ease: "power2.out",
+            });
+          }
+        }, 100);
+
+        // 3D Animation for background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        const canvasContainer = document.getElementById("canvas-container");
+        canvasContainer.appendChild(renderer.domElement);
+        console.log("Three.js renderer appended:", renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+          posArray[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(posArray, 3)
+        );
+
+        const particlesMaterial = new THREE.PointsMaterial({
+          size: 0.01,
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.5,
+        });
+
+        const particlesMesh = new THREE.Points(
+          particlesGeometry,
+          particlesMaterial
+        );
+        scene.add(particlesMesh);
+
+        camera.position.z = 5;
+
+        const animate = () => {
+          requestAnimationFrame(animate);
+
+          particlesMesh.rotation.y += 0.0005;
+          particlesMesh.rotation.x += 0.0002;
+
+          renderer.render(scene, camera);
+        };
+
+        animate();
+
+        window.addEventListener("resize", () => {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(width, height);
+        });
+      });
+    </script>
+  </body>
+</html>
