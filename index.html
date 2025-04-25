@@ -261,7 +261,19 @@
       }
 
       #services {
-        height: 100vh;
+        min-height: 100vh;
+        padding: 4rem 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      @media screen and (max-width: 768px) {
+        #services {
+          min-height: auto;
+          padding: 3rem 0;
+        }
       }
 
       @keyframes gradient {
